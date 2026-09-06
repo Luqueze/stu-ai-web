@@ -1,20 +1,20 @@
 <div class="page">
   @if (isLoading()) {
-    <p>Starting exam...</p>
+    <p class="hint">Starting exam...</p>
   } @else if (errorMessage() && !exam()) {
     <p class="form-error">{{ errorMessage() }}</p>
-    <a routerLink="/exams">Back to exams</a>
+    <a routerLink="/exams" class="btn btn-secondary">Back to exams</a>
   } @else {
     @if (exam(); as exam) {
-      <header>
+      <header class="take-header">
         <h1>{{ exam.theme }}</h1>
         <span class="timer" [class.low]="remainingSeconds() <= 60">{{ formattedTime() }}</span>
       </header>
 
       <ol class="questions">
         @for (question of exam.questions ?? []; track $index; let qi = $index) {
-          <li>
-            <p>{{ question.statement }}</p>
+          <li class="card">
+            <p class="statement"><span class="index">{{ qi + 1 }}.</span> {{ question.statement }}</p>
             <ul class="options">
               @for (option of question.options; track $index; let oi = $index) {
                 <li>
@@ -40,7 +40,7 @@
 
       <div class="actions">
         <span class="progress">{{ answeredCount() }} / {{ answers().length }} answered</span>
-        <button type="button" [disabled]="isSubmitting() || !allAnswered()" (click)="onSubmit()">
+        <button type="button" class="btn btn-primary" [disabled]="isSubmitting() || !allAnswered()" (click)="onSubmit()">
           {{ isSubmitting() ? 'Submitting...' : 'Submit exam' }}
         </button>
       </div>

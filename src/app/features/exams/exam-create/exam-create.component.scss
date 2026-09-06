@@ -1,47 +1,35 @@
 .page {
-  max-width: 420px;
-  margin: 3rem auto;
-  padding: 0 1rem;
-  font-family: system-ui, sans-serif;
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+
+  .card {
+    padding: 1.75rem 1.75rem 2rem;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
 
   form {
     display: flex;
     flex-direction: column;
   }
 
-  label {
-    margin-top: 1rem;
-    font-size: 0.875rem;
-  }
-
-  input,
-  select {
-    margin-top: 0.25rem;
-    padding: 0.5rem;
-    font-size: 1rem;
-  }
-
-  .field-error {
-    margin: 0.25rem 0 0;
-    color: #b00020;
-    font-size: 0.8rem;
-  }
-
-  .form-error {
-    margin-top: 1rem;
-    color: #b00020;
-    font-size: 0.875rem;
-  }
-
   .actions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-top: 1.5rem;
-
-    button {
-      padding: 0.6rem 1.2rem;
-      cursor: pointer;
-    }
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
   }
 }

@@ -1,72 +1,119 @@
 .page {
-  max-width: 640px;
-  margin: 3rem auto;
-  padding: 0 1rem;
-  font-family: system-ui, sans-serif;
-
   .back-link {
     display: inline-block;
     margin-bottom: 1rem;
-    color: inherit;
+    color: var(--color-text-muted);
+    font-size: 0.875rem;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--color-text);
+    }
+  }
+
+  .hint {
+    color: var(--color-text-muted);
+  }
+
+  .exam-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+
+    h1 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
   }
 
   .meta {
-    color: #666;
+    margin: 0.3rem 0 0;
+    color: var(--color-text-muted);
     font-size: 0.875rem;
   }
 
   .form-error {
-    color: #b00020;
+    margin-top: 0;
   }
 
-  .status.pending {
-    color: #8a6d00;
+  .status-card {
+    padding: 1rem 1.25rem;
+    font-size: 0.9rem;
   }
 
-  .status.failed {
-    color: #b00020;
+  .status-card--pending {
+    color: var(--color-warning);
+    background: var(--color-warning-bg);
+    border-color: transparent;
   }
 
-  .questions {
-    padding-left: 1.25rem;
-
-    li {
-      margin-bottom: 1.5rem;
-
-      &.correct {
-        color: #1b7a1b;
-        font-weight: 600;
-      }
-    }
+  .status-card--failed {
+    color: var(--color-danger);
+    background: var(--color-danger-bg);
+    border-color: transparent;
   }
 
-  .actions {
-    margin: 1rem 0;
-  }
-
-  .button {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-    text-decoration: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: inherit;
+  .results-link {
+    margin-bottom: 1.25rem;
   }
 
   .result {
-    margin: 1rem 0;
-    padding: 0.75rem 1rem;
-    border: 1px solid #eee;
-    border-radius: 4px;
+    margin-bottom: 1.25rem;
+    padding: 1rem 1.25rem;
 
     h2 {
       margin: 0 0 0.25rem;
-      font-size: 1rem;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
     }
 
     .score {
       margin: 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--color-success);
+    }
+  }
+
+  .questions {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+
+    > li {
+      padding: 1.1rem 1.25rem;
+    }
+
+    .statement {
+      margin: 0 0 0.6rem;
       font-weight: 600;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    ul li {
+      padding: 0.4rem 0.6rem;
+      border-radius: var(--radius-sm);
+      background: var(--color-bg);
+      font-size: 0.9rem;
+
+      &.correct {
+        background: var(--color-success-bg);
+        color: var(--color-success);
+        font-weight: 600;
+      }
     }
   }
 }

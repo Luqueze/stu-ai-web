@@ -2,36 +2,45 @@
   <a routerLink="/exams" class="back-link">&larr; Back to exams</a>
 
   @if (isLoading()) {
-    <p>Loading exam...</p>
+    <p class="hint">Loading exam...</p>
   } @else if (errorMessage()) {
     <p class="form-error">{{ errorMessage() }}</p>
   } @else {
     @if (exam(); as exam) {
-      <h1>{{ exam.theme }}</h1>
-      <p class="meta">
-        {{ exam.difficulty }} &middot; {{ exam.questionCount }} questions &middot;
-        {{ exam.durationMinutes }} min
-      </p>
+      <header class="exam-header">
+        <div>
+          <h1>{{ exam.theme }}</h1>
+          <p class="meta">
+            {{ exam.difficulty }} &middot; {{ exam.questionCount }} questions &middot;
+            {{ exam.durationMinutes }} min
+          </p>
+        </div>
+        <span class="badge" [class.badge--pending]="exam.status === 'PENDING'"
+          [class.badge--ready]="exam.status === 'READY'"
+          [class.badge--failed]="exam.status === 'FAILED'">{{ exam.status }}</span>
+      </header>
 
       @switch (exam.status) {
         @case ('PENDING') {
-          <p class="status pending">Generating questions... this page will update automatically.</p>
+          <div class="card status-card status-card--pending">
+            Generating questions... this page will update automatically.
+          </div>
         }
         @case ('FAILED') {
-          <p class="status failed">
+          <div class="card status-card status-card--failed">
             Generation failed{{ exam.failureMessage ? ': ' + exam.failureMessage : '.' }}
-          </p>
+          </div>
         }
         @case ('READY') {
           @if (isAdmin()) {
-            <p class="actions">
-              <a [routerLink]="['/exams', exam.id, 'results']">View student results</a>
-            </p>
+            <a [routerLink]="['/exams', exam.id, 'results']" class="btn btn-secondary results-link">
+              View student results
+            </a>
           } @else if (isSubmissionLoading()) {
-            <p>Checking your result...</p>
+            <p class="hint">Checking your result...</p>
           } @else {
             @if (submission(); as submission) {
-              <div class="result">
+              <div class="card result">
                 <h2>Your result</h2>
                 <p class="score">
                   {{ submission.scorePercentage | number: '1.0-1' }}% &middot;
@@ -39,16 +48,14 @@
                 </p>
               </div>
             } @else {
-              <p class="actions">
-                <a [routerLink]="['/exams', exam.id, 'take']" class="button">Start exam</a>
-              </p>
+              <a [routerLink]="['/exams', exam.id, 'take']" class="btn btn-primary">Start exam</a>
             }
           }
 
           <ol class="questions">
             @for (question of exam.questions ?? []; track $index) {
-              <li>
-                <p>{{ question.statement }}</p>
+              <li class="card">
+                <p class="statement">{{ question.statement }}</p>
                 <ul>
                   @for (option of question.options; track $index; let oi = $index) {
                     <li [class.correct]="isAdmin() && question.correctOptionIndex === oi">

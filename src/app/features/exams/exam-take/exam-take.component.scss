@@ -1,45 +1,70 @@
 .page {
-  max-width: 640px;
-  margin: 3rem auto;
-  padding: 0 1rem;
-  font-family: system-ui, sans-serif;
+  .hint {
+    color: var(--color-text-muted);
+  }
 
-  header {
+  .take-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
     position: sticky;
     top: 0;
-    background: #fff;
-    padding: 0.5rem 0;
+    background: var(--color-bg);
+    padding: 0.75rem 0;
+    z-index: 5;
+
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+    }
   }
 
   .timer {
     font-variant-numeric: tabular-nums;
-    font-size: 1.25rem;
-    font-weight: 600;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
 
     &.low {
-      color: #b00020;
+      background: var(--color-danger-bg);
+      color: var(--color-danger);
     }
   }
 
-  .form-error {
-    color: #b00020;
-  }
-
   .questions {
-    padding-left: 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
 
-    li {
-      margin-bottom: 1.5rem;
+    > li {
+      padding: 1.1rem 1.25rem;
+    }
+
+    .statement {
+      margin: 0 0 0.75rem;
+      font-weight: 600;
+
+      .index {
+        color: var(--color-text-muted);
+        font-weight: 700;
+      }
     }
   }
 
   .options {
     list-style: none;
     padding: 0;
-    margin: 0.5rem 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
 
     li {
       margin: 0;
@@ -48,13 +73,33 @@
     label {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 0.5rem;
-      border-radius: 4px;
+      gap: 0.6rem;
+      margin: 0;
+      padding: 0.55rem 0.75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-sm);
       cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: var(--color-text);
+      transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease;
+
+      &:hover {
+        border-color: var(--color-primary);
+      }
 
       &.selected {
-        background: #eef4ff;
+        background: var(--color-primary-soft);
+        border-color: var(--color-primary);
+        font-weight: 600;
+      }
+
+      input {
+        width: auto;
+        margin: 0;
+        accent-color: var(--color-primary);
       }
     }
   }
@@ -63,20 +108,17 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1.5rem;
+    gap: 1rem;
     position: sticky;
     bottom: 0;
-    background: #fff;
-    padding: 0.75rem 0;
+    margin: 1.25rem -1.5rem 0;
+    padding: 1rem 1.5rem;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
 
     .progress {
       font-size: 0.875rem;
-      color: #666;
-    }
-
-    button {
-      padding: 0.6rem 1.2rem;
-      cursor: pointer;
+      color: var(--color-text-muted);
     }
   }
 }

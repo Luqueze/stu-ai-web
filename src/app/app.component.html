@@ -2,15 +2,15 @@
   <nav class="app-nav">
     <a routerLink="/exams" class="brand">STU</a>
     <div class="links">
-      <a routerLink="/exams">Exams</a>
+      <a routerLink="/exams" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Exams</a>
       @if (isAdmin()) {
-        <a routerLink="/exams/new">New exam</a>
+        <a routerLink="/exams/new" routerLinkActive="active">New exam</a>
       }
-      <a routerLink="/profile">Profile</a>
+      <a routerLink="/profile" routerLinkActive="active">Profile</a>
     </div>
     <div class="user">
       <span class="user-name">{{ currentUser()?.name }}</span>
-      <button type="button" (click)="onLogout()">Log out</button>
+      <button type="button" class="btn btn-secondary" (click)="onLogout()">Log out</button>
     </div>
   </nav>
 }

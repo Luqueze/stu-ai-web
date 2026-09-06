@@ -2,18 +2,28 @@
   <h1>Exams</h1>
 
   @if (isLoading()) {
-    <p>Loading exams...</p>
+    <p class="hint">Loading exams...</p>
   } @else if (errorMessage()) {
     <p class="form-error">{{ errorMessage() }}</p>
   } @else if (exams().length === 0) {
-    <p>No exams yet.</p>
+    <div class="empty card">
+      <p>No exams yet.</p>
+    </div>
   } @else {
     <ul class="exam-list">
       @for (exam of exams(); track exam.id) {
         <li>
-          <a [routerLink]="['/exams', exam.id]">
-            <span class="theme">{{ exam.theme }}</span>
-            <span class="status" [attr.data-status]="exam.status">{{ exam.status }}</span>
+          <a class="card" [routerLink]="['/exams', exam.id]">
+            <div class="exam-info">
+              <span class="theme">{{ exam.theme }}</span>
+              <span class="meta">
+                {{ exam.difficulty }} &middot; {{ exam.questionCount }} questions &middot;
+                {{ exam.durationMinutes }} min
+              </span>
+            </div>
+            <span class="badge" [class.badge--pending]="exam.status === 'PENDING'"
+              [class.badge--ready]="exam.status === 'READY'"
+              [class.badge--failed]="exam.status === 'FAILED'">{{ exam.status }}</span>
           </a>
         </li>
       }
