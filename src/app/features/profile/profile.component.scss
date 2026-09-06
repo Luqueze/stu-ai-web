@@ -1,0 +1,73 @@
+.page {
+  max-width: 420px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  font-family: system-ui, sans-serif;
+
+  h2 {
+    margin-top: 2rem;
+    font-size: 1rem;
+  }
+
+  .meta {
+    color: #666;
+    font-size: 0.875rem;
+  }
+
+  .key-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .date {
+      font-size: 0.8rem;
+      color: #666;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+  }
+
+  label {
+    margin-top: 1rem;
+    font-size: 0.875rem;
+  }
+
+  input {
+    margin-top: 0.25rem;
+    padding: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .field-error,
+  .form-error {
+    margin: 0.25rem 0 0;
+    color: #b00020;
+    font-size: 0.8rem;
+  }
+
+  .form-success {
+    margin: 0.25rem 0 0;
+    color: #1b7a1b;
+    font-size: 0.8rem;
+  }
+
+  .actions {
+    margin-top: 1.5rem;
+
+    button {
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+    }
+  }
+}

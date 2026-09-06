@@ -1,0 +1,51 @@
+<div class="page">
+  <h1>Profile</h1>
+
+  @if (currentUser(); as user) {
+    <p class="meta">{{ user.name }} &middot; {{ user.email }} &middot; {{ user.role }}</p>
+  }
+
+  <h2>AI provider API keys</h2>
+
+  @if (isLoading()) {
+    <p>Loading saved keys...</p>
+  } @else if (apiKeys().length === 0) {
+    <p>No API keys saved yet.</p>
+  } @else {
+    <ul class="key-list">
+      @for (apiKey of apiKeys(); track apiKey.id) {
+        <li>
+          <span class="provider">{{ apiKey.provider }}</span>
+          <span class="date">saved {{ apiKey.createdAt | date: 'medium' }}</span>
+        </li>
+      }
+    </ul>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label for="provider">Provider</label>
+    <input id="provider" type="text" formControlName="provider" placeholder="openai" />
+    @if (form.controls.provider.invalid && form.controls.provider.touched) {
+      <p class="field-error">Provider is required.</p>
+    }
+
+    <label for="apiKey">API key</label>
+    <input id="apiKey" type="password" formControlName="apiKey" autocomplete="off" />
+    @if (form.controls.apiKey.invalid && form.controls.apiKey.touched) {
+      <p class="field-error">API key is required.</p>
+    }
+
+    @if (errorMessage()) {
+      <p class="form-error">{{ errorMessage() }}</p>
+    }
+    @if (successMessage()) {
+      <p class="form-success">{{ successMessage() }}</p>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Saving...' : 'Save key' }}
+      </button>
+    </div>
+  </form>
+</div>

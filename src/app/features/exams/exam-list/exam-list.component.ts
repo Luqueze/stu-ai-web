@@ -1,7 +1,6 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
-import { AuthService } from '../../../core/auth/auth.service';
 import { ExamService } from '../../../core/exam/exam.service';
 import { ExamResponse } from '../../../core/exam/exam.models';
 
@@ -14,11 +13,6 @@ import { ExamResponse } from '../../../core/exam/exam.models';
 })
 export class ExamListComponent implements OnInit {
   private readonly examService = inject(ExamService);
-  private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
-
-  readonly currentUser = this.authService.currentUser;
-  readonly isAdmin = computed(() => this.currentUser()?.role === 'ADMIN');
 
   readonly exams = signal<ExamResponse[]>([]);
   readonly isLoading = signal(true);
@@ -35,10 +29,5 @@ export class ExamListComponent implements OnInit {
         this.errorMessage.set('Could not load exams. Please try again later.');
       }
     });
-  }
-
-  onLogout(): void {
-    this.authService.logout();
-    void this.router.navigateByUrl('/login');
   }
 }

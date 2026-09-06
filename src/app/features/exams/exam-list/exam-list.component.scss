@@ -4,35 +4,6 @@
   padding: 0 1rem;
   font-family: system-ui, sans-serif;
 
-  header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 1.5rem;
-  }
-
-  .header-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .user-name {
-    font-size: 0.875rem;
-    color: #666;
-  }
-
-  .button,
-  button {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    text-decoration: none;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    color: inherit;
-    background: transparent;
-  }
-
   .form-error {
     color: #b00020;
   }

@@ -15,6 +15,11 @@ export const routes: Routes = [
       import('./features/auth/register/register.component').then((m) => m.RegisterComponent)
   },
   {
+    path: 'profile',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/profile/profile.component').then((m) => m.ProfileComponent)
+  },
+  {
     path: 'exams',
     canActivate: [authGuard],
     children: [

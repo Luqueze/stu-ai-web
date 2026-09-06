@@ -1,1 +1,18 @@
+@if (isAuthenticated()) {
+  <nav class="app-nav">
+    <a routerLink="/exams" class="brand">STU</a>
+    <div class="links">
+      <a routerLink="/exams">Exams</a>
+      @if (isAdmin()) {
+        <a routerLink="/exams/new">New exam</a>
+      }
+      <a routerLink="/profile">Profile</a>
+    </div>
+    <div class="user">
+      <span class="user-name">{{ currentUser()?.name }}</span>
+      <button type="button" (click)="onLogout()">Log out</button>
+    </div>
+  </nav>
+}
+
 <router-outlet />

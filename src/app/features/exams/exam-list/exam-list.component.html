@@ -1,14 +1,5 @@
 <div class="page">
-  <header>
-    <h1>Exams</h1>
-    <div class="header-actions">
-      @if (isAdmin()) {
-        <a routerLink="/exams/new" class="button">Create exam</a>
-      }
-      <span class="user-name">{{ currentUser()?.name }}</span>
-      <button type="button" (click)="onLogout()">Log out</button>
-    </div>
-  </header>
+  <h1>Exams</h1>
 
   @if (isLoading()) {
     <p>Loading exams...</p>
