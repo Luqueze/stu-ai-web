@@ -36,7 +36,7 @@ New components should be generated as standalone (`ng generate component` defaul
 ### API access — proxy + environments, not hardcoded URLs
 
 - `src/environments/environment.ts` (production) and `environment.development.ts` (dev) both expose `apiUrl: '/api'` — always read the gateway base URL from `environment.apiUrl`, never hardcode `http://localhost:8080` in a service.
-- `proxy.conf.json` rewrites `/api/*` to `http://localhost:8080/*` (the api-gateway's local port per the backend's `docker-compose.yml`/`.env.example`) during `ng serve`, avoiding CORS in dev. It is wired into the `serve` target in `angular.json` (`architect.serve.options.proxyConfig`).
+- `proxy.conf.json` forwards `/api/*` unchanged to `http://localhost:8080/api/*` (the api-gateway's local port per the backend's `docker-compose.yml`/`.env.example`) during `ng serve`, avoiding CORS in dev — the gateway's own route predicates (`api-gateway/src/main/resources/application.yml`) match on the full `/api/v1/...` path with no rewrite, so the proxy must not strip the `/api` prefix. It is wired into the `serve` target in `angular.json` (`architect.serve.options.proxyConfig`).
 - In production the same `/api` prefix is expected to be reverse-proxied to the gateway by whatever serves the built static files — this repo does not itself define that infra.
 
 ### HTTP interceptors
@@ -59,3 +59,5 @@ The backend (`../back-end/CLAUDE.md`) documents the service contracts this app i
 - Do not bypass the API gateway.
 - Do not assume exam generation is synchronous.
 - Do not invent API DTOs when backend OpenAPI documentation is available.
+- Do not put co authored by in the commits
+- Use git prefixes to each commit: Example: fix, feat, ref
