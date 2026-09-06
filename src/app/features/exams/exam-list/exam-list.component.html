@@ -1,0 +1,31 @@
+<div class="page">
+  <header>
+    <h1>Exams</h1>
+    <div class="header-actions">
+      @if (isAdmin()) {
+        <a routerLink="/exams/new" class="button">Create exam</a>
+      }
+      <span class="user-name">{{ currentUser()?.name }}</span>
+      <button type="button" (click)="onLogout()">Log out</button>
+    </div>
+  </header>
+
+  @if (isLoading()) {
+    <p>Loading exams...</p>
+  } @else if (errorMessage()) {
+    <p class="form-error">{{ errorMessage() }}</p>
+  } @else if (exams().length === 0) {
+    <p>No exams yet.</p>
+  } @else {
+    <ul class="exam-list">
+      @for (exam of exams(); track exam.id) {
+        <li>
+          <a [routerLink]="['/exams', exam.id]">
+            <span class="theme">{{ exam.theme }}</span>
+            <span class="status" [attr.data-status]="exam.status">{{ exam.status }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</div>

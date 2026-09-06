@@ -3,24 +3,26 @@ import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../../../core/auth/auth.service';
+import { ExamService } from '../../../core/exam/exam.service';
 import { ErrorResponse } from '../../../core/auth/auth.models';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-exam-create',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './exam-create.component.html',
+  styleUrl: './exam-create.component.scss'
 })
-export class LoginComponent {
-  private readonly authService = inject(AuthService);
+export class ExamCreateComponent {
+  private readonly examService = inject(ExamService);
   private readonly router = inject(Router);
   private readonly formBuilder = inject(FormBuilder).nonNullable;
 
   readonly form = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', [Validators.required]]
+    theme: ['', [Validators.required]],
+    questionCount: [10, [Validators.required, Validators.min(1), Validators.max(50)]],
+    difficulty: ['MEDIUM' as 'EASY' | 'MEDIUM' | 'HARD', [Validators.required]],
+    durationMinutes: [30, [Validators.required, Validators.min(1), Validators.max(480)]]
   });
 
   readonly isSubmitting = signal(false);
@@ -35,10 +37,10 @@ export class LoginComponent {
     this.isSubmitting.set(true);
     this.errorMessage.set(null);
 
-    this.authService.login(this.form.getRawValue()).subscribe({
-      next: () => {
+    this.examService.createExam(this.form.getRawValue()).subscribe({
+      next: (exam) => {
         this.isSubmitting.set(false);
-        void this.router.navigateByUrl('/exams');
+        void this.router.navigate(['/exams', exam.id]);
       },
       error: (err: HttpErrorResponse) => {
         this.isSubmitting.set(false);
@@ -48,8 +50,8 @@ export class LoginComponent {
   }
 
   private mapError(err: HttpErrorResponse): string {
-    if (err.status === 401) {
-      return 'Invalid email or password.';
+    if (err.status === 403) {
+      return "You don't have permission to create exams.";
     }
     const body = err.error as Partial<ErrorResponse> | null;
     return body?.message ?? 'Something went wrong. Please try again.';

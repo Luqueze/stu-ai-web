@@ -1,0 +1,42 @@
+<div class="page">
+  <a routerLink="/exams" class="back-link">&larr; Back to exams</a>
+
+  @if (isLoading()) {
+    <p>Loading exam...</p>
+  } @else if (errorMessage()) {
+    <p class="form-error">{{ errorMessage() }}</p>
+  } @else {
+    @if (exam(); as exam) {
+      <h1>{{ exam.theme }}</h1>
+      <p class="meta">
+        {{ exam.difficulty }} &middot; {{ exam.questionCount }} questions &middot;
+        {{ exam.durationMinutes }} min
+      </p>
+
+      @switch (exam.status) {
+        @case ('PENDING') {
+          <p class="status pending">Generating questions... this page will update automatically.</p>
+        }
+        @case ('FAILED') {
+          <p class="status failed">
+            Generation failed{{ exam.failureMessage ? ': ' + exam.failureMessage : '.' }}
+          </p>
+        }
+        @case ('READY') {
+          <ol class="questions">
+            @for (question of exam.questions ?? []; track $index) {
+              <li>
+                <p>{{ question.statement }}</p>
+                <ul>
+                  @for (option of question.options; track $index) {
+                    <li>{{ option }}</li>
+                  }
+                </ul>
+              </li>
+            }
+          </ol>
+        }
+      }
+    }
+  }
+</div>

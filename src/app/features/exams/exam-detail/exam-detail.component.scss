@@ -1,0 +1,37 @@
+.page {
+  max-width: 640px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  font-family: system-ui, sans-serif;
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: inherit;
+  }
+
+  .meta {
+    color: #666;
+    font-size: 0.875rem;
+  }
+
+  .form-error {
+    color: #b00020;
+  }
+
+  .status.pending {
+    color: #8a6d00;
+  }
+
+  .status.failed {
+    color: #b00020;
+  }
+
+  .questions {
+    padding-left: 1.25rem;
+
+    li {
+      margin-bottom: 1.5rem;
+    }
+  }
+}

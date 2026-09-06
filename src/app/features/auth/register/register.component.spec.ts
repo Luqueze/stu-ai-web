@@ -52,7 +52,7 @@ describe('RegisterComponent', () => {
       email: 'ada@example.com',
       password: 'password123'
     });
-    expect(router.navigateByUrl).toHaveBeenCalledWith('/dashboard');
+    expect(router.navigateByUrl).toHaveBeenCalledWith('/exams');
     expect(component.isSubmitting()).toBeFalse();
   });
 

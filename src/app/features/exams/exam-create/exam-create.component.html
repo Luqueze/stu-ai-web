@@ -1,0 +1,41 @@
+<div class="page">
+  <h1>Create exam</h1>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <label for="theme">Theme</label>
+    <input id="theme" type="text" formControlName="theme" />
+    @if (form.controls.theme.invalid && form.controls.theme.touched) {
+      <p class="field-error">Theme is required.</p>
+    }
+
+    <label for="questionCount">Number of questions</label>
+    <input id="questionCount" type="number" formControlName="questionCount" min="1" max="50" />
+    @if (form.controls.questionCount.invalid && form.controls.questionCount.touched) {
+      <p class="field-error">Enter a value between 1 and 50.</p>
+    }
+
+    <label for="difficulty">Difficulty</label>
+    <select id="difficulty" formControlName="difficulty">
+      <option value="EASY">Easy</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="HARD">Hard</option>
+    </select>
+
+    <label for="durationMinutes">Duration (minutes)</label>
+    <input id="durationMinutes" type="number" formControlName="durationMinutes" min="1" max="480" />
+    @if (form.controls.durationMinutes.invalid && form.controls.durationMinutes.touched) {
+      <p class="field-error">Enter a value between 1 and 480.</p>
+    }
+
+    @if (errorMessage()) {
+      <p class="form-error">{{ errorMessage() }}</p>
+    }
+
+    <div class="actions">
+      <a routerLink="/exams">Cancel</a>
+      <button type="submit" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Creating...' : 'Create exam' }}
+      </button>
+    </div>
+  </form>
+</div>

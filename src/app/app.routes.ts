@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { adminGuard } from './core/guards/admin.guard';
 import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
@@ -14,10 +15,26 @@ export const routes: Routes = [
       import('./features/auth/register/register.component').then((m) => m.RegisterComponent)
   },
   {
-    path: 'dashboard',
+    path: 'exams',
     canActivate: [authGuard],
-    loadComponent: () =>
-      import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent)
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./features/exams/exam-list/exam-list.component').then((m) => m.ExamListComponent)
+      },
+      {
+        path: 'new',
+        canActivate: [adminGuard],
+        loadComponent: () =>
+          import('./features/exams/exam-create/exam-create.component').then((m) => m.ExamCreateComponent)
+      },
+      {
+        path: ':id',
+        loadComponent: () =>
+          import('./features/exams/exam-detail/exam-detail.component').then((m) => m.ExamDetailComponent)
+      }
+    ]
   },
   { path: '**', redirectTo: 'login' }
 ];
