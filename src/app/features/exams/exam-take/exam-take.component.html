@@ -1,0 +1,49 @@
+<div class="page">
+  @if (isLoading()) {
+    <p>Starting exam...</p>
+  } @else if (errorMessage() && !exam()) {
+    <p class="form-error">{{ errorMessage() }}</p>
+    <a routerLink="/exams">Back to exams</a>
+  } @else {
+    @if (exam(); as exam) {
+      <header>
+        <h1>{{ exam.theme }}</h1>
+        <span class="timer" [class.low]="remainingSeconds() <= 60">{{ formattedTime() }}</span>
+      </header>
+
+      <ol class="questions">
+        @for (question of exam.questions ?? []; track $index; let qi = $index) {
+          <li>
+            <p>{{ question.statement }}</p>
+            <ul class="options">
+              @for (option of question.options; track $index; let oi = $index) {
+                <li>
+                  <label [class.selected]="answers()[qi] === oi">
+                    <input
+                      type="radio"
+                      [name]="'question-' + qi"
+                      [checked]="answers()[qi] === oi"
+                      (change)="selectOption(qi, oi)"
+                    />
+                    {{ option }}
+                  </label>
+                </li>
+              }
+            </ul>
+          </li>
+        }
+      </ol>
+
+      @if (errorMessage()) {
+        <p class="form-error">{{ errorMessage() }}</p>
+      }
+
+      <div class="actions">
+        <span class="progress">{{ answeredCount() }} / {{ answers().length }} answered</span>
+        <button type="button" [disabled]="isSubmitting() || !allAnswered()" (click)="onSubmit()">
+          {{ isSubmitting() ? 'Submitting...' : 'Submit exam' }}
+        </button>
+      </div>
+    }
+  }
+</div>

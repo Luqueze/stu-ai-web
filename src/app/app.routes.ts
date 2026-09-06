@@ -33,6 +33,17 @@ export const routes: Routes = [
         path: ':id',
         loadComponent: () =>
           import('./features/exams/exam-detail/exam-detail.component').then((m) => m.ExamDetailComponent)
+      },
+      {
+        path: ':id/take',
+        loadComponent: () =>
+          import('./features/exams/exam-take/exam-take.component').then((m) => m.ExamTakeComponent)
+      },
+      {
+        path: ':id/results',
+        canActivate: [adminGuard],
+        loadComponent: () =>
+          import('./features/exams/exam-results/exam-results.component').then((m) => m.ExamResultsComponent)
       }
     ]
   },

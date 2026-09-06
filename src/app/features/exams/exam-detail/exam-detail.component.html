@@ -23,13 +23,37 @@
           </p>
         }
         @case ('READY') {
+          @if (isAdmin()) {
+            <p class="actions">
+              <a [routerLink]="['/exams', exam.id, 'results']">View student results</a>
+            </p>
+          } @else if (isSubmissionLoading()) {
+            <p>Checking your result...</p>
+          } @else {
+            @if (submission(); as submission) {
+              <div class="result">
+                <h2>Your result</h2>
+                <p class="score">
+                  {{ submission.scorePercentage | number: '1.0-1' }}% &middot;
+                  {{ submission.correctCount }} / {{ submission.totalQuestions }} correct
+                </p>
+              </div>
+            } @else {
+              <p class="actions">
+                <a [routerLink]="['/exams', exam.id, 'take']" class="button">Start exam</a>
+              </p>
+            }
+          }
+
           <ol class="questions">
             @for (question of exam.questions ?? []; track $index) {
               <li>
                 <p>{{ question.statement }}</p>
                 <ul>
-                  @for (option of question.options; track $index) {
-                    <li>{{ option }}</li>
+                  @for (option of question.options; track $index; let oi = $index) {
+                    <li [class.correct]="isAdmin() && question.correctOptionIndex === oi">
+                      {{ option }}
+                    </li>
                   }
                 </ul>
               </li>

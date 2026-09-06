@@ -12,7 +12,8 @@ export interface CreateExamRequest {
 export interface ExamQuestionResponse {
   statement: string;
   options: string[];
-  correctOptionIndex: number;
+  // Redacted (null) by the gateway/api for non-admin callers.
+  correctOptionIndex: number | null;
 }
 
 export interface ExamResponse {
@@ -26,4 +27,30 @@ export interface ExamResponse {
   durationMinutes: number;
   createdAt: string;
   questions: ExamQuestionResponse[] | null;
+}
+
+export interface ExamSessionResponse {
+  examId: string;
+  startedAt: string;
+  remainingSeconds: number;
+}
+
+export interface SubmitExamRequest {
+  selectedOptions: number[];
+}
+
+export interface ExamSubmissionResponse {
+  examId: string;
+  totalQuestions: number;
+  correctCount: number;
+  scorePercentage: number;
+  submittedAt: string;
+}
+
+export interface ExamSubmissionSummaryResponse {
+  studentEmail: string;
+  totalQuestions: number;
+  correctCount: number;
+  scorePercentage: number;
+  submittedAt: string;
 }

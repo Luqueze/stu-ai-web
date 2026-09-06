@@ -1,0 +1,34 @@
+.page {
+  max-width: 720px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  font-family: system-ui, sans-serif;
+
+  .back-link {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: inherit;
+  }
+
+  .form-error {
+    color: #b00020;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  th {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #666;
+  }
+}

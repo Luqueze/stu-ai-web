@@ -1,0 +1,82 @@
+.page {
+  max-width: 640px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  font-family: system-ui, sans-serif;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 0.5rem 0;
+  }
+
+  .timer {
+    font-variant-numeric: tabular-nums;
+    font-size: 1.25rem;
+    font-weight: 600;
+
+    &.low {
+      color: #b00020;
+    }
+  }
+
+  .form-error {
+    color: #b00020;
+  }
+
+  .questions {
+    padding-left: 1.25rem;
+
+    li {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .options {
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0 0;
+
+    li {
+      margin: 0;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &.selected {
+        background: #eef4ff;
+      }
+    }
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    padding: 0.75rem 0;
+
+    .progress {
+      font-size: 0.875rem;
+      color: #666;
+    }
+
+    button {
+      padding: 0.6rem 1.2rem;
+      cursor: pointer;
+    }
+  }
+}
