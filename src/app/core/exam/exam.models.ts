@@ -12,7 +12,7 @@ export interface CreateExamRequest {
 export interface ExamQuestionResponse {
   statement: string;
   options: string[];
-  // Redacted (null) by the gateway/api for non-admin callers.
+  // Redacted (null) unless the caller is an admin or has already submitted this exam.
   correctOptionIndex: number | null;
 }
 

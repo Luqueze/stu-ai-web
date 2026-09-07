@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { AuthService } from './core/auth/auth.service';
@@ -15,7 +15,6 @@ export class AppComponent {
 
   readonly isAuthenticated = this.authService.isAuthenticated;
   readonly currentUser = this.authService.currentUser;
-  readonly isAdmin = computed(() => this.currentUser()?.role === 'ADMIN');
 
   onLogout(): void {
     this.authService.logout();

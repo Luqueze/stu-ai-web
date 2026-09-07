@@ -30,7 +30,6 @@ export const routes: Routes = [
       },
       {
         path: 'new',
-        canActivate: [adminGuard],
         loadComponent: () =>
           import('./features/exams/exam-create/exam-create.component').then((m) => m.ExamCreateComponent)
       },

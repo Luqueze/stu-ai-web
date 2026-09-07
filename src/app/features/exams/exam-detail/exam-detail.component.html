@@ -58,7 +58,7 @@
                 <p class="statement">{{ question.statement }}</p>
                 <ul>
                   @for (option of question.options; track $index; let oi = $index) {
-                    <li [class.correct]="isAdmin() && question.correctOptionIndex === oi">
+                    <li [class.correct]="(isAdmin() || submission()) && question.correctOptionIndex === oi">
                       {{ option }}
                     </li>
                   }

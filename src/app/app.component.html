@@ -3,9 +3,7 @@
     <a routerLink="/exams" class="brand">STU</a>
     <div class="links">
       <a routerLink="/exams" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Exams</a>
-      @if (isAdmin()) {
-        <a routerLink="/exams/new" routerLinkActive="active">New exam</a>
-      }
+      <a routerLink="/exams/new" routerLinkActive="active">New exam</a>
       <a routerLink="/profile" routerLinkActive="active">Profile</a>
     </div>
     <div class="user">
