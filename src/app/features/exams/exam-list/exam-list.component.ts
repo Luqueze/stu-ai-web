@@ -1,6 +1,7 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { AuthService } from '../../../core/auth/auth.service';
 import { ExamService } from '../../../core/exam/exam.service';
 import { ExamResponse } from '../../../core/exam/exam.models';
 
@@ -13,10 +14,14 @@ import { ExamResponse } from '../../../core/exam/exam.models';
 })
 export class ExamListComponent implements OnInit {
   private readonly examService = inject(ExamService);
+  private readonly authService = inject(AuthService);
 
+  readonly currentUser = this.authService.currentUser;
   readonly exams = signal<ExamResponse[]>([]);
   readonly isLoading = signal(true);
   readonly errorMessage = signal<string | null>(null);
+
+  readonly pendingCount = computed(() => this.exams().filter((e) => e.status === 'PENDING').length);
 
   ngOnInit(): void {
     this.examService.listExams().subscribe({

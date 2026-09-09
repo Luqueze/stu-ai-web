@@ -28,19 +28,19 @@ describe('AppComponent', () => {
     expect(fixture.componentInstance).toBeTruthy();
   });
 
-  it('hides the nav bar when the user is not authenticated', () => {
+  it('hides the sidebar when the user is not authenticated', () => {
     setup(false);
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.querySelector('nav')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.sidebar')).toBeNull();
   });
 
-  it('shows the nav bar with the user name when authenticated', () => {
+  it('shows the sidebar with the user name when authenticated', () => {
     setup(true);
     fixture.detectChanges();
 
-    const nav: HTMLElement = fixture.nativeElement.querySelector('nav');
-    expect(nav).not.toBeNull();
-    expect(nav.textContent).toContain('Ada Lovelace');
+    const sidebar: HTMLElement = fixture.nativeElement.querySelector('.sidebar');
+    expect(sidebar).not.toBeNull();
+    expect(sidebar.textContent).toContain('Ada Lovelace');
   });
 });

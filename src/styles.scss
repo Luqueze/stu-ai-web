@@ -1,27 +1,38 @@
 :root {
-  --color-bg: #f6f7fb;
+  --color-bg: #f1f6f6;
   --color-surface: #ffffff;
-  --color-border: #e3e5ec;
-  --color-text: #1a1c29;
-  --color-text-muted: #6b7080;
-  --color-primary: #4f46e5;
-  --color-primary-hover: #4338ca;
-  --color-primary-soft: #eef1ff;
+  --color-border: #d8e0e0;
+  --color-border-strong: #c3cdcd;
+  --color-text: #061415;
+  --color-text-muted: #4b5c5c;
+  --color-primary: #005354;
+  --color-primary-hover: #004244;
+  --color-primary-bright: #008c7e;
+  --color-primary-soft: #cbecec;
   --color-primary-contrast: #ffffff;
-  --color-danger: #dc2626;
-  --color-danger-bg: #fef2f2;
-  --color-success: #15803d;
-  --color-success-bg: #f0fdf4;
-  --color-warning: #b45309;
-  --color-warning-bg: #fffbeb;
+  --color-accent: #d48500;
+  --color-accent-soft: #ffe3bc;
+  --color-danger: #b32228;
+  --color-danger-bg: #ffe0dc;
+  --color-success: #00722e;
+  --color-success-bg: #d4f1d8;
+  --color-warning: #a53e00;
+  --color-warning-bg: #ffddca;
 
-  --radius-sm: 6px;
-  --radius-md: 12px;
-  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
-  --shadow-md: 0 8px 24px rgba(16, 24, 40, 0.08);
+  --color-sidebar-bg: #021818;
+  --color-sidebar-bg-active: #003839;
+  --color-sidebar-border: #1f3232;
+  --color-sidebar-text: #f5f9f9;
+  --color-sidebar-text-muted: #97a9a8;
 
-  --font-sans:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(2, 24, 24, 0.06);
+  --shadow-md: 0 8px 24px rgba(2, 24, 24, 0.1);
+
+  --font-sans: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 * {
@@ -48,7 +59,35 @@ a {
 h1,
 h2,
 h3 {
+  font-family: var(--font-heading);
+  font-weight: 800;
   line-height: 1.25;
+}
+
+/* Auth branding */
+
+.auth-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: var(--color-text);
+
+  .mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--color-accent);
+    color: #fff;
+    font-size: 0.9rem;
+  }
 }
 
 /* Layout */

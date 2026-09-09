@@ -1,5 +1,18 @@
 <div class="page">
-  <h1>Exams</h1>
+  <section class="hero">
+    <div>
+      <h1>Welcome back{{ currentUser()?.name ? ', ' + currentUser()?.name : '' }}</h1>
+      @if (!isLoading() && !errorMessage()) {
+        <p class="hero-subtitle">
+          {{ exams().length }} exam{{ exams().length === 1 ? '' : 's' }} total
+          @if (pendingCount() > 0) {
+            &middot; {{ pendingCount() }} generating
+          }
+        </p>
+      }
+    </div>
+    <a routerLink="/exams/new" class="btn hero-cta">New exam</a>
+  </section>
 
   @if (isLoading()) {
     <p class="hint">Loading exams...</p>

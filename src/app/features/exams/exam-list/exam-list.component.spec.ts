@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
+import { AuthService } from '../../../core/auth/auth.service';
 import { ExamService } from '../../../core/exam/exam.service';
 import { ExamResponse } from '../../../core/exam/exam.models';
 import { ExamListComponent } from './exam-list.component';
@@ -10,6 +11,7 @@ describe('ExamListComponent', () => {
   let fixture: ComponentFixture<ExamListComponent>;
   let component: ExamListComponent;
   let examServiceSpy: jasmine.SpyObj<ExamService>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
 
   const exams: ExamResponse[] = [
     {
@@ -28,10 +30,17 @@ describe('ExamListComponent', () => {
 
   function setup(): void {
     examServiceSpy = jasmine.createSpyObj<ExamService>('ExamService', ['listExams']);
+    authServiceSpy = {
+      currentUser: () => ({ id: 'u1', name: 'Ada Lovelace', email: 'ada@example.com', role: 'STUDENT' })
+    } as unknown as jasmine.SpyObj<AuthService>;
 
     TestBed.configureTestingModule({
       imports: [ExamListComponent],
-      providers: [provideRouter([]), { provide: ExamService, useValue: examServiceSpy }]
+      providers: [
+        provideRouter([]),
+        { provide: ExamService, useValue: examServiceSpy },
+        { provide: AuthService, useValue: authServiceSpy }
+      ]
     });
 
     fixture = TestBed.createComponent(ExamListComponent);

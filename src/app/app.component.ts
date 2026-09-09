@@ -16,6 +16,13 @@ export class AppComponent {
   readonly isAuthenticated = this.authService.isAuthenticated;
   readonly currentUser = this.authService.currentUser;
 
+  initials(): string {
+    const name = this.currentUser()?.name ?? '';
+    const parts = name.trim().split(/\s+/).filter(Boolean);
+    if (parts.length === 0) return '?';
+    return (parts[0][0] + (parts.length > 1 ? parts[parts.length - 1][0] : '')).toUpperCase();
+  }
+
   onLogout(): void {
     this.authService.logout();
     void this.router.navigateByUrl('/login');
