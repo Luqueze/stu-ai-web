@@ -50,6 +50,12 @@ The backend (`../back-end/CLAUDE.md`) documents the service contracts this app i
 - Exam/question generation is asynchronous: creating an exam returns `PENDING` immediately (202), and the UI must poll or otherwise observe a status transition to `READY` rather than expecting a synchronous response.
 - Swagger/OpenAPI docs are generated per backend service (`springdoc-openapi`) — check there for current request/response DTO shapes rather than assuming REST conventions.
 
+## Commit Messages
+
+- Every commit message must start with a conventional prefix describing the change, followed by a colon and a short description: `feat:`, `fix:`, `ref:` (refactor), `chore:`, `docs:`, `test:`, `style:`, `perf:`.
+- Keep the subject line short and to the point. A short body below it is fine for extra context, but keep it brief (a few short lines) — avoid long, multi-paragraph commit bodies.
+- Do not add attribution/co-authored-by lines (including Claude session links) to commits or PR descriptions.
+
 ## Important Rules
 
 - Do not call backend microservices directly.
@@ -60,4 +66,4 @@ The backend (`../back-end/CLAUDE.md`) documents the service contracts this app i
 - Do not assume exam generation is synchronous.
 - Do not invent API DTOs when backend OpenAPI documentation is available.
 - Do not put co authored by in the commits
-- Use git prefixes to each commit: Example: fix, feat, ref
+- Use git prefixes to each commit: Example: fix, feat, ref (see Commit Messages above for the full convention)
