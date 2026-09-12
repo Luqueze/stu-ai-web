@@ -23,7 +23,20 @@
       @switch (exam.status) {
         @case ('PENDING') {
           <div class="card status-card status-card--pending">
-            Generating questions... this page will update automatically.
+            <p>Generating questions... this page will update automatically.</p>
+            <div class="progress-bar-row">
+              <div
+                class="progress-bar"
+                role="progressbar"
+                [attr.aria-valuenow]="pendingProgressRounded()"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-label="Generating exam"
+              >
+                <div class="progress-bar__fill" [style.width.%]="pendingProgress()"></div>
+              </div>
+              <span class="progress-bar__label">{{ pendingProgressRounded() }}%</span>
+            </div>
           </div>
         }
         @case ('FAILED') {

@@ -47,6 +47,37 @@
     color: var(--color-warning);
     background: var(--color-warning-bg);
     border-color: transparent;
+
+    p {
+      margin: 0 0 0.75rem;
+    }
+  }
+
+  .progress-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .progress-bar {
+    flex: 1;
+    height: 6px;
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-warning) 20%, transparent);
+    overflow: hidden;
+
+    &__fill {
+      height: 100%;
+      border-radius: inherit;
+      background: var(--color-warning);
+      transition: width 0.2s linear;
+    }
+
+    &__label {
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+      font-size: 0.85rem;
+    }
   }
 
   .status-card--failed {
