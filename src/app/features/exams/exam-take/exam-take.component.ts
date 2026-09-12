@@ -30,9 +30,12 @@ export class ExamTakeComponent implements OnInit {
   readonly isLoading = signal(true);
   readonly isSubmitting = signal(false);
   readonly errorMessage = signal<string | null>(null);
+  readonly currentIndex = signal(0);
 
   readonly allAnswered = computed(() => this.answers().every((a) => a !== null));
   readonly answeredCount = computed(() => this.answers().filter((a) => a !== null).length);
+  readonly isFirstQuestion = computed(() => this.currentIndex() === 0);
+  readonly isLastQuestion = computed(() => this.currentIndex() === (this.exam()?.questions?.length ?? 1) - 1);
 
   readonly formattedTime = computed(() => {
     const total = this.remainingSeconds();
@@ -103,6 +106,20 @@ export class ExamTakeComponent implements OnInit {
     const next = [...this.answers()];
     next[questionIndex] = optionIndex;
     this.answers.set(next);
+  }
+
+  goToNext(): void {
+    if (this.isLastQuestion()) {
+      return;
+    }
+    this.currentIndex.update((i) => i + 1);
+  }
+
+  goToPrevious(): void {
+    if (this.isFirstQuestion()) {
+      return;
+    }
+    this.currentIndex.update((i) => i - 1);
   }
 
   onSubmit(): void {
