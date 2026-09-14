@@ -115,6 +115,10 @@ export class ExamTakeComponent implements OnInit {
     this.currentIndex.update((i) => i + 1);
   }
 
+  goToQuestion(index: number): void {
+    this.currentIndex.set(index);
+  }
+
   goToPrevious(): void {
     if (this.isFirstQuestion()) {
       return;

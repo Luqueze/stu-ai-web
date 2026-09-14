@@ -11,6 +11,25 @@
         <span class="timer" [class.low]="remainingSeconds() <= 60">{{ formattedTime() }}</span>
       </header>
 
+      <nav class="question-nav" aria-label="Questions">
+        @for (answer of answers(); track $index; let qi = $index) {
+          <button
+            type="button"
+            class="question-bubble"
+            [class.active]="currentIndex() === qi"
+            [class.answered]="answer !== null"
+            [attr.aria-current]="currentIndex() === qi ? 'true' : null"
+            [attr.aria-label]="'Question ' + (qi + 1) + (answer !== null ? ', answered' : ', not answered')"
+            (click)="goToQuestion(qi)"
+          >
+            {{ qi + 1 }}
+            @if (answer !== null) {
+              <span class="answered-icon" aria-hidden="true">✓</span>
+            }
+          </button>
+        }
+      </nav>
+
       @if (exam.questions?.[currentIndex()]; as question) {
         <div class="card question-card">
           <p class="statement">
