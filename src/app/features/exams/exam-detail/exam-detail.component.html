@@ -59,6 +59,12 @@
                   {{ submission.scorePercentage | number: '1.0-1' }}% &middot;
                   {{ submission.correctCount }} / {{ submission.totalQuestions }} correct
                 </p>
+                <button type="button" class="btn btn-primary retake-btn" [disabled]="isRetaking()" (click)="retakeExam()">
+                  {{ isRetaking() ? 'Starting new attempt...' : 'Retake exam' }}
+                </button>
+                @if (retakeError()) {
+                  <p class="form-error">{{ retakeError() }}</p>
+                }
               </div>
             } @else {
               <a [routerLink]="['/exams', exam.id, 'take']" class="btn btn-primary">Start exam</a>

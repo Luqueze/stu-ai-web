@@ -1,8 +1,11 @@
 import { DecimalPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { interval, takeWhile, timer } from 'rxjs';
+
+import { ErrorResponse } from '../../../core/auth/auth.models';
 
 import { AuthService } from '../../../core/auth/auth.service';
 import { ExamService } from '../../../core/exam/exam.service';
@@ -25,6 +28,7 @@ const MAX_ESTIMATED_PROGRESS = 95;
 })
 export class ExamDetailComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
   private readonly examService = inject(ExamService);
   private readonly authService = inject(AuthService);
   private readonly destroyRef = inject(DestroyRef);
@@ -42,6 +46,9 @@ export class ExamDetailComponent implements OnInit {
 
   readonly pendingProgress = signal(0);
   readonly pendingProgressRounded = computed(() => Math.round(this.pendingProgress()));
+
+  readonly isRetaking = signal(false);
+  readonly retakeError = signal<string | null>(null);
 
   private progressTickerStarted = false;
 
@@ -108,5 +115,34 @@ export class ExamDetailComponent implements OnInit {
     timer(POLL_INTERVAL_MS)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.loadExam());
+  }
+
+  retakeExam(): void {
+    const exam = this.exam();
+    if (!exam || this.isRetaking()) {
+      return;
+    }
+
+    this.isRetaking.set(true);
+    this.retakeError.set(null);
+
+    this.examService
+      .createExam({
+        theme: exam.theme,
+        questionCount: exam.questionCount,
+        difficulty: exam.difficulty,
+        durationMinutes: exam.durationMinutes
+      })
+      .subscribe({
+        next: (newExam) => {
+          this.isRetaking.set(false);
+          void this.router.navigate(['/exams', newExam.id]);
+        },
+        error: (err: HttpErrorResponse) => {
+          this.isRetaking.set(false);
+          const body = err.error as Partial<ErrorResponse> | null;
+          this.retakeError.set(body?.message ?? 'Could not start a new attempt. Please try again.');
+        }
+      });
   }
 }
