@@ -45,6 +45,10 @@ export class ExamService {
     return this.http.get<ExamSubmissionResponse>(`${this.baseUrl}/${examId}/submission`);
   }
 
+  getSubmissionHistory(examId: string): Observable<ExamSubmissionResponse[]> {
+    return this.http.get<ExamSubmissionResponse[]>(`${this.baseUrl}/${examId}/submission/history`);
+  }
+
   listSubmissions(examId: string): Observable<ExamSubmissionSummaryResponse[]> {
     return this.http.get<ExamSubmissionSummaryResponse[]>(`${this.baseUrl}/${examId}/submissions`);
   }

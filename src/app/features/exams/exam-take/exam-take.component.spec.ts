@@ -126,21 +126,26 @@ describe('ExamTakeComponent', () => {
     expect(examServiceSpy.submitExam).toHaveBeenCalledWith('exam-1', { selectedOptions: [1, -1] });
   }));
 
-  it('redirects to the exam detail page if the exam was already submitted', () => {
+  it('shows an error message if the session fails to start', () => {
     setup();
-    examServiceSpy.getExam.and.returnValue(of(readyExam));
     examServiceSpy.startSession.and.returnValue(
-      throwError(
-        () =>
-          new HttpErrorResponse({
-            status: 409,
-            error: { message: 'Exam exam-1 has already been submitted by this student' }
-          })
-      )
+      throwError(() => new HttpErrorResponse({ status: 404, error: { message: 'Not found' } }))
     );
 
     fixture.detectChanges();
 
-    expect(router.navigate).toHaveBeenCalledWith(['/exams', 'exam-1']);
+    expect(examServiceSpy.getExam).not.toHaveBeenCalled();
+    expect(component.isLoading()).toBeFalse();
+    expect(component.errorMessage()).toBe('Your session has expired. Please start the exam again.');
+  });
+
+  it('starts the session before fetching the exam so a retake never receives the answer key', () => {
+    setup();
+    examServiceSpy.getExam.and.returnValue(of(readyExam));
+    examServiceSpy.startSession.and.returnValue(of(session));
+
+    fixture.detectChanges();
+
+    expect(examServiceSpy.startSession).toHaveBeenCalledBefore(examServiceSpy.getExam);
   });
 });

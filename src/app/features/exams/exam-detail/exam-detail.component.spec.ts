@@ -41,7 +41,12 @@ describe('ExamDetailComponent', () => {
   };
 
   function setup(role: 'ADMIN' | 'STUDENT'): void {
-    examServiceSpy = jasmine.createSpyObj<ExamService>('ExamService', ['getExam', 'getSubmission']);
+    examServiceSpy = jasmine.createSpyObj<ExamService>('ExamService', [
+      'getExam',
+      'getSubmission',
+      'getSubmissionHistory'
+    ]);
+    examServiceSpy.getSubmissionHistory.and.returnValue(of([]));
     authServiceSpy = jasmine.createSpyObj<AuthService>('AuthService', ['logout']);
     Object.defineProperty(authServiceSpy, 'currentUser', { value: () => ({ role }) });
 
@@ -95,15 +100,18 @@ describe('ExamDetailComponent', () => {
     expect(examServiceSpy.getSubmission).not.toHaveBeenCalled();
   });
 
-  it('shows the student result once a submission exists', () => {
+  it('shows the student result and loads attempt history once a submission exists', () => {
     setup('STUDENT');
     examServiceSpy.getExam.and.returnValue(of(readyExam));
     examServiceSpy.getSubmission.and.returnValue(of(submission));
+    examServiceSpy.getSubmissionHistory.and.returnValue(of([submission]));
 
     fixture.detectChanges();
 
     expect(examServiceSpy.getSubmission).toHaveBeenCalledWith('exam-1');
     expect(fixture.componentInstance.submission()).toEqual(submission);
+    expect(examServiceSpy.getSubmissionHistory).toHaveBeenCalledWith('exam-1');
+    expect(fixture.componentInstance.submissionHistory()).toEqual([submission]);
   });
 
   it('leaves submission unset when the student has not submitted yet (404)', () => {

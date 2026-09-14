@@ -59,11 +59,20 @@
                   {{ submission.scorePercentage | number: '1.0-1' }}% &middot;
                   {{ submission.correctCount }} / {{ submission.totalQuestions }} correct
                 </p>
-                <button type="button" class="btn btn-primary retake-btn" [disabled]="isRetaking()" (click)="retakeExam()">
-                  {{ isRetaking() ? 'Starting new attempt...' : 'Retake exam' }}
-                </button>
-                @if (retakeError()) {
-                  <p class="form-error">{{ retakeError() }}</p>
+                <a [routerLink]="['/exams', exam.id, 'take']" class="btn btn-primary retake-btn">Retake exam</a>
+
+                @if (submissionHistory().length > 1) {
+                  <div class="attempt-history">
+                    <h3>Attempt history</h3>
+                    <ol>
+                      @for (attempt of submissionHistory(); track attempt.submittedAt) {
+                        <li>
+                          <span class="attempt-score">{{ attempt.scorePercentage | number: '1.0-1' }}%</span>
+                          <span class="attempt-date">{{ attempt.submittedAt | date: 'short' }}</span>
+                        </li>
+                      }
+                    </ol>
+                  </div>
                 }
               </div>
             } @else {

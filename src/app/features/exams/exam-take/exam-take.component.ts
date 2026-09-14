@@ -45,45 +45,37 @@ export class ExamTakeComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    this.examService.getExam(this.examId).subscribe({
-      next: (exam) => {
-        if (exam.status !== 'READY') {
-          this.isLoading.set(false);
-          this.errorMessage.set('This exam is not ready to be taken yet.');
-          return;
-        }
-        this.exam.set(exam);
-        this.answers.set(new Array(exam.questions?.length ?? 0).fill(null));
-        this.startSession();
-      },
-      error: () => {
-        this.isLoading.set(false);
-        this.errorMessage.set('Could not load this exam.');
-      }
-    });
+    // Starts the session before fetching the exam: the backend only redacts the answer key
+    // while the student has no active session, so fetching first would leak it on a retake.
+    this.startSession();
   }
 
   private startSession(): void {
     this.examService.startSession(this.examId).subscribe({
       next: (session) => {
         this.remainingSeconds.set(session.remainingSeconds);
-        this.isLoading.set(false);
-        this.startTimer();
+        this.loadExam();
       },
       error: (err: HttpErrorResponse) => {
         this.isLoading.set(false);
-        if (err.status === 409 && this.hasSubmission(err)) {
-          void this.router.navigate(['/exams', this.examId]);
-          return;
-        }
         this.errorMessage.set(this.mapError(err));
       }
     });
   }
 
-  private hasSubmission(err: HttpErrorResponse): boolean {
-    const body = err.error as Partial<ErrorResponse> | null;
-    return (body?.message ?? '').toLowerCase().includes('already been submitted');
+  private loadExam(): void {
+    this.examService.getExam(this.examId).subscribe({
+      next: (exam) => {
+        this.exam.set(exam);
+        this.answers.set(new Array(exam.questions?.length ?? 0).fill(null));
+        this.isLoading.set(false);
+        this.startTimer();
+      },
+      error: () => {
+        this.isLoading.set(false);
+        this.errorMessage.set('Could not load this exam.');
+      }
+    });
   }
 
   private startTimer(): void {
@@ -140,10 +132,6 @@ export class ExamTakeComponent implements OnInit {
       },
       error: (err: HttpErrorResponse) => {
         this.isSubmitting.set(false);
-        if (err.status === 409 && this.hasSubmission(err)) {
-          void this.router.navigate(['/exams', this.examId]);
-          return;
-        }
         this.errorMessage.set(this.mapError(err));
       }
     });

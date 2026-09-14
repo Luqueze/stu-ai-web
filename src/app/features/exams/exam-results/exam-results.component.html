@@ -23,7 +23,7 @@
           </tr>
         </thead>
         <tbody>
-          @for (submission of submissions(); track submission.studentEmail) {
+          @for (submission of submissions(); track submission.studentEmail + submission.submittedAt) {
             <tr>
               <td>{{ submission.studentEmail }}</td>
               <td>
