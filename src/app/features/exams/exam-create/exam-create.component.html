@@ -1,4 +1,4 @@
-<div class="page page--narrow">
+<div class="page">
   <a routerLink="/exams" class="back-link">&larr; Back to exams</a>
 
   <div class="card">
@@ -6,7 +6,7 @@
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <label for="theme">Theme</label>
-      <input id="theme" type="text" formControlName="theme" placeholder="e.g. World War II" />
+      <textarea id="theme" rows="4" formControlName="theme" placeholder="e.g. World War II"></textarea>
       @if (form.controls.theme.invalid && form.controls.theme.touched) {
         <p class="field-error">Theme is required.</p>
       }
