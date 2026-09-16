@@ -17,6 +17,8 @@
         <p class="field-error">Password is required.</p>
       }
 
+      <p class="forgot-password-link"><a routerLink="/forgot-password">Forgot your password?</a></p>
+
       @if (errorMessage()) {
         <p class="form-error">{{ errorMessage() }}</p>
       }

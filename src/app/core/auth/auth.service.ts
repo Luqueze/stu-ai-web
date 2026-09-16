@@ -5,8 +5,10 @@ import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   AuthResponse,
+  ForgotPasswordRequest,
   LoginRequest,
   RegisterRequest,
+  ResetPasswordRequest,
   StoredAuthSession,
   UserResponse
 } from './auth.models';
@@ -33,6 +35,14 @@ export class AuthService {
     return this.http
       .post<AuthResponse>(`${this.baseUrl}/register`, request)
       .pipe(tap((response) => this.persistSession(response)));
+  }
+
+  forgotPassword(request: ForgotPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/forgot-password`, request);
+  }
+
+  resetPassword(request: ResetPasswordRequest): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/reset-password`, request);
   }
 
   logout(): void {
