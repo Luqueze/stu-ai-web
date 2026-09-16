@@ -1,49 +1,5 @@
-.auth-page {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem 1rem;
-  background-image:
-    radial-gradient(circle at center, rgba(255, 255, 255, 0.1) 1.5px, transparent 1.6px),
-    linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-bright) 100%);
-  background-size:
-    18px 18px,
-    100% 100%;
-}
-
-.auth-card {
-  width: 100%;
-  max-width: 380px;
-  padding: 2.25rem 2rem;
-
-  h1 {
-    margin: 0;
-    font-size: 1.4rem;
-    text-align: center;
-  }
-
-  .subtitle {
-    margin: 0.4rem 0 0;
-    text-align: center;
-    color: var(--color-text-muted);
-    font-size: 0.875rem;
-  }
-
-  .forgot-password-link {
-    margin: 0.5rem 0 0;
-    text-align: right;
-    font-size: 0.8125rem;
-  }
-
-  button[type='submit'] {
-    margin-top: 1.75rem;
-  }
-
-  .switch-link {
-    margin: 1.75rem 0 0;
-    text-align: center;
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
-  }
+.forgot-password-link {
+  margin: 0.5rem 0 0;
+  text-align: right;
+  font-size: 0.8125rem;
 }

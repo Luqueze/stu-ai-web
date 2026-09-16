@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" fill="none" font-family="Lexend, system-ui, sans-serif">
+  <circle cx="176" cy="132" r="96" fill="#DFEBE9"/>
+  <circle cx="812" cy="438" r="124" fill="#DFEBE9"/>
+  <ellipse cx="846" cy="126" rx="62" ry="34" transform="rotate(-24 846 126)" fill="#CFE3E0"/>
+  <ellipse cx="128" cy="424" rx="54" ry="26" transform="rotate(-32 128 424)" fill="#008C7E"/>
+  <ellipse cx="196" cy="452" rx="38" ry="18" transform="rotate(16 196 452)" fill="#7FC4BB"/>
+  <rect x="200" y="400" width="562" height="10" rx="5" fill="#CFE3E0"/>
+  <rect x="300" y="118" width="364" height="234" rx="18" fill="#005354"/>
+  <rect x="316" y="134" width="332" height="202" rx="10" fill="#FFFFFF"/>
+  <rect x="340" y="158" width="132" height="12" rx="6" fill="#CFE3E0"/>
+  <rect x="588" y="156" width="36" height="16" rx="8" fill="#EEF4F3"/>
+  <rect x="340" y="188" width="240" height="9" rx="4.5" fill="#DFEBE9"/>
+  <rect x="340" y="205" width="176" height="9" rx="4.5" fill="#DFEBE9"/>
+  <rect x="340" y="230" width="284" height="22" rx="11" fill="#F1F6F6"/>
+  <circle cx="353" cy="241" r="5.5" fill="#9FC8C3"/>
+  <rect x="340" y="258" width="284" height="22" rx="11" fill="#F1F6F6"/>
+  <circle cx="353" cy="269" r="5.5" fill="#9FC8C3"/>
+  <rect x="340" y="286" width="284" height="24" rx="12" fill="#E4F2EF"/>
+  <circle cx="353" cy="298" r="7" fill="#008C7E"/>
+  <path d="M349.5 298l2.8 2.8 4.6-5.4" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="268" y="352" width="428" height="22" rx="11" fill="#008C7E"/>
+  <rect x="444" y="352" width="76" height="6" rx="3" fill="#005354"/>
+  <circle cx="706" cy="168" r="48" fill="#D48500"/>
+  <path d="M686 168l13 13 21-26" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="160" y="236" width="128" height="88" rx="22" fill="#FFFFFF"/>
+  <text x="224" y="288" text-anchor="middle" font-size="38" font-weight="700" fill="#005354">9.4</text>
+  <text x="224" y="308" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="2.4" fill="#008C7E">SCORE</text>
+  <rect x="676" y="252" width="150" height="56" rx="18" fill="#005354"/>
+  <circle cx="704" cy="280" r="12" fill="#D48500"/>
+  <text x="726" y="286" font-size="16" font-weight="600" fill="#FFFFFF">Passed</text>
+</svg>

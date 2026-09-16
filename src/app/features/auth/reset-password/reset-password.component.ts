@@ -10,8 +10,7 @@ import { ErrorResponse } from '../../../core/auth/auth.models';
   selector: 'app-reset-password',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './reset-password.component.html',
-  styleUrl: './reset-password.component.scss'
+  templateUrl: './reset-password.component.html'
 })
 export class ResetPasswordComponent {
   private readonly authService = inject(AuthService);

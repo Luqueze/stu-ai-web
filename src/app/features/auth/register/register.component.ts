@@ -10,8 +10,7 @@ import { ErrorResponse } from '../../../core/auth/auth.models';
   selector: 'app-register',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  templateUrl: './register.component.html'
 })
 export class RegisterComponent {
   private readonly authService = inject(AuthService);
