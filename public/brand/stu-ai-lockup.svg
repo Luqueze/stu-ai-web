@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="64" viewBox="0 0 260 64" fill="none" font-family="Sora, system-ui, sans-serif">
+  <rect x="14" y="13" width="36" height="9" rx="4.5" fill="#005354"/>
+  <rect x="14" y="27.5" width="36" height="9" rx="4.5" fill="#008C7E"/>
+  <rect x="14" y="42" width="22" height="9" rx="4.5" fill="#D48500"/>
+  <rect x="41" y="42" width="9" height="9" rx="4.5" fill="#D48500"/>
+  <text x="68" y="40" font-size="28" font-weight="700" fill="#005354">STU <tspan fill="#D48500">AI</tspan></text>
+</svg>
