@@ -1,45 +1,103 @@
-<div class="page">
+<div class="exam-dashboard">
   <section class="hero">
     <div>
       <h1>Welcome back{{ currentUser()?.name ? ', ' + currentUser()?.name : '' }}</h1>
-      @if (!isLoading() && !errorMessage()) {
-        <p class="hero-subtitle">
-          {{ exams().length }} exam{{ exams().length === 1 ? '' : 's' }} total
-          @if (pendingCount() > 0) {
-            &middot; {{ pendingCount() }} generating
-          }
-        </p>
+      @if (!isLoading() && !errorMessage() && heroSubtitle()) {
+        <p class="hero-subtitle">{{ heroSubtitle() }}</p>
       }
     </div>
-    <a routerLink="/exams/new" class="btn hero-cta">New exam</a>
+    <a routerLink="/exams/new" class="btn btn-primary hero-cta">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14" /></svg>
+      New exam
+    </a>
   </section>
 
   @if (isLoading()) {
     <p class="hint">Loading exams...</p>
   } @else if (errorMessage()) {
     <p class="form-error">{{ errorMessage() }}</p>
-  } @else if (exams().length === 0) {
+  } @else if (stats().total === 0) {
     <div class="empty card">
       <p>No exams yet.</p>
     </div>
   } @else {
-    <ul class="exam-list">
-      @for (exam of exams(); track exam.id) {
-        <li>
-          <a class="card" [routerLink]="['/exams', exam.id]">
-            <div class="exam-info">
-              <span class="theme">{{ exam.theme }}</span>
-              <span class="meta">
-                {{ exam.difficulty }} &middot; {{ exam.questionCount }} questions &middot;
-                {{ exam.durationMinutes }} min
-              </span>
-            </div>
-            <span class="badge" [class.badge--pending]="exam.status === 'PENDING'"
-              [class.badge--ready]="exam.status === 'READY'"
-              [class.badge--failed]="exam.status === 'FAILED'">{{ exam.status }}</span>
-          </a>
-        </li>
+    <div class="stat-grid">
+      <div class="stat-tile">
+        <span class="stat-label">Total exams</span>
+        <span class="stat-value">{{ stats().total }}</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-label">Completed</span>
+        <span class="stat-value">{{ stats().completed }}</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-label">Average score</span>
+        <span class="stat-value stat-value--accent">{{ stats().average }}%</span>
+      </div>
+      <div class="stat-tile stat-tile--highlight">
+        <span class="stat-label">Pass rate</span>
+        <span class="stat-value">{{ stats().passed }} of {{ stats().completed }}</span>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      @for (f of filters; track f) {
+        <button
+          type="button"
+          class="filter-chip"
+          [class.filter-chip--active]="filter() === f"
+          (click)="onFilterChange(f)"
+        >
+          {{ f }} &middot; {{ counts()[f] }}
+        </button>
       }
-    </ul>
+      <label class="search-field">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4 4" /></svg>
+        <input
+          type="text"
+          placeholder="Search exams"
+          [value]="query()"
+          (input)="onQueryChange($any($event.target).value)"
+        />
+      </label>
+    </div>
+
+    @if (filteredRows().length === 0) {
+      <div class="empty card">
+        <p>No exams match this filter.</p>
+      </div>
+    } @else {
+      <ul class="exam-list">
+        @for (row of visibleRows(); track row.exam.id) {
+          <li>
+            <div class="exam-row" [class]="'exam-row--' + row.outcome.toLowerCase()">
+              <div class="exam-info">
+                <span class="theme">{{ row.exam.theme }}</span>
+                <span class="meta">
+                  {{ row.exam.questionCount }} questions &middot; {{ row.exam.durationMinutes }} min &middot;
+                  {{ row.exam.createdAt | date: 'MMM d' }}
+                </span>
+              </div>
+              <span class="score" [class.score--muted]="row.scorePercentage === null">
+                {{ row.scorePercentage === null ? '—' : (row.scorePercentage | number: '1.0-0') + '%' }}
+              </span>
+              <span class="status-badge" [class]="'status-badge--' + row.outcome.toLowerCase()">{{ statusLabel(row.outcome) }}</span>
+              <a
+                [routerLink]="actionLink(row)"
+                class="btn"
+                [class.btn-primary]="row.outcome === 'READY' || row.outcome === 'FAILED'"
+                [class.btn-secondary]="row.outcome === 'PASSED' || row.outcome === 'PENDING' || row.outcome === 'ERROR'"
+              >
+                {{ actionLabel(row.outcome) }}
+              </a>
+            </div>
+          </li>
+        }
+      </ul>
+
+      @if (hasMore()) {
+        <button type="button" class="btn btn-secondary load-more" (click)="loadMore()">Load older exams</button>
+      }
+    }
   }
 </div>
