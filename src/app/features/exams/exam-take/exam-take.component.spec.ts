@@ -98,6 +98,21 @@ describe('ExamTakeComponent', () => {
     expect(component.allAnswered()).toBeTrue();
   });
 
+  it('toggles a flag on a question independently of its answer', () => {
+    setup();
+    examServiceSpy.getExam.and.returnValue(of(readyExam));
+    examServiceSpy.startSession.and.returnValue(of(session));
+    fixture.detectChanges();
+
+    expect(component.flags()).toEqual([false, false]);
+
+    component.toggleFlag(0);
+    expect(component.flags()).toEqual([true, false]);
+
+    component.toggleFlag(0);
+    expect(component.flags()).toEqual([false, false]);
+  });
+
   it('submits the selected answers and navigates to the exam detail page', () => {
     setup();
     examServiceSpy.getExam.and.returnValue(of(readyExam));

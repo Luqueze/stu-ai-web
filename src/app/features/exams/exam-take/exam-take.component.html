@@ -18,17 +18,33 @@
             class="question-bubble"
             [class.active]="currentIndex() === qi"
             [class.answered]="answer !== null"
+            [class.flagged]="flags()[qi]"
             [attr.aria-current]="currentIndex() === qi ? 'true' : null"
-            [attr.aria-label]="'Question ' + (qi + 1) + (answer !== null ? ', answered' : ', not answered')"
+            [attr.aria-label]="
+              'Question ' + (qi + 1) + (answer !== null ? ', answered' : ', not answered') + (flags()[qi] ? ', flagged' : '')
+            "
             (click)="goToQuestion(qi)"
           >
             {{ qi + 1 }}
-            @if (answer !== null) {
-              <span class="answered-icon" aria-hidden="true">✓</span>
+            @if (flags()[qi]) {
+              <span class="status-icon flag-icon" aria-hidden="true">⚑</span>
+            } @else if (answer !== null) {
+              <span class="status-icon answered-icon" aria-hidden="true">✓</span>
             }
           </button>
         }
       </nav>
+
+      <button
+        type="button"
+        class="btn-flag"
+        [class.active]="flags()[currentIndex()]"
+        [attr.aria-pressed]="flags()[currentIndex()]"
+        [attr.aria-label]="flags()[currentIndex()] ? 'Remove flag from this question' : 'Flag this question for review'"
+        (click)="toggleFlag(currentIndex())"
+      >
+        <span aria-hidden="true">⚑</span> Flag question
+      </button>
 
       @if (exam.questions?.[currentIndex()]; as question) {
         <div class="card question-card">

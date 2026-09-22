@@ -26,6 +26,7 @@ export class ExamTakeComponent implements OnInit {
 
   readonly exam = signal<ExamResponse | null>(null);
   readonly answers = signal<(number | null)[]>([]);
+  readonly flags = signal<boolean[]>([]);
   readonly remainingSeconds = signal(0);
   readonly isLoading = signal(true);
   readonly isSubmitting = signal(false);
@@ -68,6 +69,7 @@ export class ExamTakeComponent implements OnInit {
       next: (exam) => {
         this.exam.set(exam);
         this.answers.set(new Array(exam.questions?.length ?? 0).fill(null));
+        this.flags.set(new Array(exam.questions?.length ?? 0).fill(false));
         this.isLoading.set(false);
         this.startTimer();
       },
@@ -98,6 +100,12 @@ export class ExamTakeComponent implements OnInit {
     const next = [...this.answers()];
     next[questionIndex] = optionIndex;
     this.answers.set(next);
+  }
+
+  toggleFlag(questionIndex: number): void {
+    const next = [...this.flags()];
+    next[questionIndex] = !next[questionIndex];
+    this.flags.set(next);
   }
 
   goToNext(): void {
