@@ -37,6 +37,7 @@ export interface ExamSessionResponse {
 
 export interface SubmitExamRequest {
   selectedOptions: number[];
+  flaggedQuestions: boolean[];
 }
 
 export interface ExamSubmissionResponse {
@@ -45,6 +46,7 @@ export interface ExamSubmissionResponse {
   correctCount: number;
   scorePercentage: number;
   submittedAt: string;
+  flaggedQuestions: boolean[];
 }
 
 export interface ExamSubmissionSummaryResponse {

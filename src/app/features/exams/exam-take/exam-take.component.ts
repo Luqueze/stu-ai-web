@@ -134,7 +134,8 @@ export class ExamTakeComponent implements OnInit {
     this.errorMessage.set(null);
 
     const selectedOptions = this.answers().map((a) => a ?? -1);
-    this.examService.submitExam(this.examId, { selectedOptions }).subscribe({
+    const flaggedQuestions = this.flags();
+    this.examService.submitExam(this.examId, { selectedOptions, flaggedQuestions }).subscribe({
       next: () => {
         void this.router.navigate(['/exams', this.examId]);
       },

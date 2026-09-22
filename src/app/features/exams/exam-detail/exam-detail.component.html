@@ -81,9 +81,14 @@
           }
 
           <ol class="questions">
-            @for (question of exam.questions ?? []; track $index) {
+            @for (question of exam.questions ?? []; track $index; let qi = $index) {
               <li class="card">
-                <p class="statement">{{ question.statement }}</p>
+                <p class="statement">
+                  {{ question.statement }}
+                  @if (submission()?.flaggedQuestions?.[qi]) {
+                    <span class="flag-badge" aria-label="Flagged for review">⚑ Flagged</span>
+                  }
+                </p>
                 <ul>
                   @for (option of question.options; track $index; let oi = $index) {
                     <li [class.correct]="(isAdmin() || submission()) && question.correctOptionIndex === oi">

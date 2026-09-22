@@ -36,6 +36,7 @@ describe('ExamListComponent', () => {
       correctCount: 8,
       scorePercentage: 80,
       submittedAt: new Date().toISOString(),
+      flaggedQuestions: [],
       ...overrides
     };
   }

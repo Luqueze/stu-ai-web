@@ -167,6 +167,20 @@
       font-weight: 600;
     }
 
+    .flag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-left: 0.6rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: var(--color-warning-bg);
+      color: var(--color-warning);
+      font-size: 0.75rem;
+      font-weight: 600;
+      vertical-align: middle;
+    }
+
     ul {
       list-style: none;
       padding: 0;

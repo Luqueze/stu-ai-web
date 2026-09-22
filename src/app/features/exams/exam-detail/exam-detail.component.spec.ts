@@ -37,7 +37,8 @@ describe('ExamDetailComponent', () => {
     totalQuestions: 1,
     correctCount: 1,
     scorePercentage: 100,
-    submittedAt: new Date().toISOString()
+    submittedAt: new Date().toISOString(),
+    flaggedQuestions: [true]
   };
 
   function setup(role: 'ADMIN' | 'STUDENT'): void {

@@ -40,7 +40,8 @@ describe('ExamTakeComponent', () => {
     totalQuestions: 2,
     correctCount: 2,
     scorePercentage: 100,
-    submittedAt: new Date().toISOString()
+    submittedAt: new Date().toISOString(),
+    flaggedQuestions: [false, false]
   };
 
   function setup(): void {
@@ -122,9 +123,13 @@ describe('ExamTakeComponent', () => {
 
     component.selectOption(0, 1);
     component.selectOption(1, 0);
+    component.toggleFlag(1);
     component.onSubmit();
 
-    expect(examServiceSpy.submitExam).toHaveBeenCalledWith('exam-1', { selectedOptions: [1, 0] });
+    expect(examServiceSpy.submitExam).toHaveBeenCalledWith('exam-1', {
+      selectedOptions: [1, 0],
+      flaggedQuestions: [false, true]
+    });
     expect(router.navigate).toHaveBeenCalledWith(['/exams', 'exam-1']);
   });
 
@@ -138,7 +143,10 @@ describe('ExamTakeComponent', () => {
     component.selectOption(0, 1);
     tick(2000);
 
-    expect(examServiceSpy.submitExam).toHaveBeenCalledWith('exam-1', { selectedOptions: [1, -1] });
+    expect(examServiceSpy.submitExam).toHaveBeenCalledWith('exam-1', {
+      selectedOptions: [1, -1],
+      flaggedQuestions: [false, false]
+    });
   }));
 
   it('shows an error message if the session fails to start', () => {
