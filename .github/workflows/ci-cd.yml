@@ -1,0 +1,92 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit tests
+        run: npm run test:ci
+
+      - name: Build (production)
+        run: npm run build
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
+          retention-days: 7
+
+      - name: Upload build output
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/front-end/browser
+          retention-days: 7
+
+  deploy:
+    name: Deploy to S3
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      id-token: write
+      contents: read
+    concurrency:
+      group: deploy-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      # Hashed bundles go up first so the new index.html never references a missing chunk.
+      - name: Upload hashed assets (long cache)
+        run: >
+          aws s3 sync dist "s3://${{ vars.S3_BUCKET }}"
+          --exclude "*" --include "*.js" --include "*.css" --include "media/*"
+          --cache-control "public,max-age=31536000,immutable"
+
+      - name: Upload index.html and static files (no cache)
+        run: >
+          aws s3 sync dist "s3://${{ vars.S3_BUCKET }}"
+          --exclude "*.js" --exclude "*.css" --exclude "media/*"
+          --cache-control "no-cache"
+
+      - name: Remove stale files
+        run: aws s3 sync dist "s3://${{ vars.S3_BUCKET }}" --delete
