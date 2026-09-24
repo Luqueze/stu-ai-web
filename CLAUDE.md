@@ -67,3 +67,5 @@ The backend (`../back-end/CLAUDE.md`) documents the service contracts this app i
 - Do not invent API DTOs when backend OpenAPI documentation is available.
 - Do not put co authored by in the commits
 - Use git prefixes to each commit: Example: fix, feat, ref (see Commit Messages above for the full convention)
+- Avoid adding code comments unless the logic is genuinely non-obvious; do not narrate what the code already says.
+- Always ask for confirmation before running `git commit` — never commit without the user explicitly agreeing to it first, even mid-task.
